@@ -20,10 +20,14 @@ public class LibraryController {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping
+    @GetMapping("/clients")
     public List<Client> clientListRequest(){
         return clientRepository.findAll();
     }
 
+    @GetMapping()
+    public List<Client> clientListRequest(){
+        return clientRepository.findAll();
+    }
 
 }
