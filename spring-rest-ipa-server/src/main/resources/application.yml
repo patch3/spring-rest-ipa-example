@@ -1,9 +1,0 @@
-server.port: 8081
-
-spring:
-  jpa.hibernate.ddl-auto: update
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/isrpo_lab4
-    username: root
-    password: Q25rw4e3
