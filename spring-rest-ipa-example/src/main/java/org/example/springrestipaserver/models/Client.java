@@ -24,7 +24,7 @@ public class Client {
     @Column(name = "last_name")
     private String lastName;
 
-    @JsonIgnore
+
     @ManyToMany
     @JoinTable(name = "has",
             joinColumns = @JoinColumn(name = "clientId", referencedColumnName = "id"),

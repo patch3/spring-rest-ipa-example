@@ -1,10 +1,9 @@
 package org.example.springrestipaserver.controllers.api;
 
-import lombok.val;
 import org.example.springrestipaserver.models.Client;
+import org.example.springrestipaserver.projections.ClientProjection;
 import org.example.springrestipaserver.repository.ClientRepository;
 import org.springframework.boot.autoconfigure.batch.BatchDataSource;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +20,13 @@ public class ClientController {
 
     @BatchDataSource()
     @GetMapping()
-    public List<Client> getAll() {
-        return clientRepository.findAll();
+    public List<ClientProjection> getAll() {
+        return clientRepository.findAllProjection();
     }
 
     @GetMapping("/{id}")
-    public Client getById(@PathVariable Long id) {
-        return clientRepository.findById(id).orElse(null);
+    public ClientProjection getById(@PathVariable Long id) {
+        return clientRepository.findProjectionById(id).orElse(null);
     }
 
     @PostMapping

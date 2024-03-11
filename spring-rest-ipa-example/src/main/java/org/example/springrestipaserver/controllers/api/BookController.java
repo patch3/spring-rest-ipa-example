@@ -1,6 +1,5 @@
 package org.example.springrestipaserver.controllers.api;
 
-import lombok.val;
 import org.example.springrestipaserver.models.Book;
 import org.example.springrestipaserver.repository.BookRepository;
 import org.springframework.data.domain.Sort;
