@@ -13,11 +13,10 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByFirstNameStartingWith(String prefix);
 
     Optional<ClientProjection> findProjectionById(Long id);
-
-    ClientProjection saveProjection(ClientProjection id);
     @NonNull
     List<Client> findAll();
 
-    @NonNull
-    List<ClientProjection> findAllProjection();
+    List<ClientProjection> findProjectionBy();
+
+
 }

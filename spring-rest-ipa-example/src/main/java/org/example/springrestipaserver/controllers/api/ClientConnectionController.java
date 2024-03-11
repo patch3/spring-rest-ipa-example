@@ -1,6 +1,9 @@
 package org.example.springrestipaserver.controllers.api;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.example.springrestipaserver.models.Book;
 import org.example.springrestipaserver.models.Client;
+import org.example.springrestipaserver.repository.BookRepository;
 import org.example.springrestipaserver.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +15,12 @@ import java.util.List;
 @RequestMapping("/apu/clientbook")
 public class ClientConnectionController {
     private final ClientRepository clientRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public ClientConnectionController(ClientRepository clientRepository) {
+    public ClientConnectionController(ClientRepository clientRepository, BookRepository bookRepository) {
         this.clientRepository = clientRepository;
+        this.bookRepository = bookRepository;
     }
 
     @GetMapping
@@ -29,15 +34,19 @@ public class ClientConnectionController {
     }
 
     @PostMapping
-    public Client addClient(@RequestBody Client client) {
+    public Client addConnection(
+            @RequestBody Long idClient,
+            @RequestBody Long idBook
+        ) {
+        Client client = clientRepository.findById(idClient).orElseThrow(() -> new EntityNotFoundException("Client not found"));
+        Book book = bookRepository.findById(idBook).orElseThrow(() -> new EntityNotFoundException("Book not found"));
+
+        client.getBooks().add(book);
         return clientRepository.save(client);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteClient(@PathVariable Long id) {
+    public void deleteConnection(@PathVariable Long idClient, @PathVariable Long ) {
         clientRepository.deleteById(id);
     }
-
-    @PutMapping("/{id}")
-    public Client
 }

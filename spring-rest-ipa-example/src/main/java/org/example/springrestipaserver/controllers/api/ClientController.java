@@ -21,7 +21,7 @@ public class ClientController {
     @BatchDataSource()
     @GetMapping()
     public List<ClientProjection> getAll() {
-        return clientRepository.findAllProjection();
+        return clientRepository.findProjectionBy();
     }
 
     @GetMapping("/{id}")
