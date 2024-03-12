@@ -1,7 +1,7 @@
 package org.example.springrestipaserver.controllers.api;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.springrestipaserver.models.Book;
+import lombok.val;
 import org.example.springrestipaserver.models.Client;
 import org.example.springrestipaserver.repository.BookRepository;
 import org.example.springrestipaserver.repository.ClientRepository;
@@ -38,15 +38,27 @@ public class ClientConnectionController {
             @RequestBody Long idClient,
             @RequestBody Long idBook
         ) {
-        Client client = clientRepository.findById(idClient).orElseThrow(() -> new EntityNotFoundException("Client not found"));
-        Book book = bookRepository.findById(idBook).orElseThrow(() -> new EntityNotFoundException("Book not found"));
+        val client = clientRepository.findById(idClient).orElseThrow(
+                () -> new EntityNotFoundException("Client not found"));
+        val book   = bookRepository.findById(idBook).orElseThrow(
+                () -> new EntityNotFoundException("Book not found"));
 
         client.getBooks().add(book);
         return clientRepository.save(client);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteConnection(@PathVariable Long idClient, @PathVariable Long ) {
-        clientRepository.deleteById(id);
+    public void deleteConnection(
+            @PathVariable Long idClient,
+            @PathVariable Long idBook
+    ) {
+        val client = clientRepository.findById(idClient).orElseThrow(
+                () -> new EntityNotFoundException("Client not found"));
+        val book   = bookRepository.findById(idBook).orElseThrow(
+                () -> new EntityNotFoundException("Book not found"));
+
+        client.getBooks().remove(book);
+
+        clientRepository.save(client);
     }
 }
