@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/apu/clientbook")
+@RequestMapping("/api/client-connection")
 public class ClientConnectionController {
     private final ClientRepository clientRepository;
     private final BookRepository bookRepository;
@@ -42,23 +42,21 @@ public class ClientConnectionController {
                 () -> new EntityNotFoundException("Client not found"));
         val book   = bookRepository.findById(idBook).orElseThrow(
                 () -> new EntityNotFoundException("Book not found"));
-
         client.getBooks().add(book);
         return clientRepository.save(client);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{clientId}/book/{bookId}")
     public void deleteConnection(
-            @PathVariable Long idClient,
-            @PathVariable Long idBook
+            @PathVariable Long clientId,
+            @PathVariable Long bookId
     ) {
-        val client = clientRepository.findById(idClient).orElseThrow(
+        val client = clientRepository.findById(clientId).orElseThrow(
                 () -> new EntityNotFoundException("Client not found"));
-        val book   = bookRepository.findById(idBook).orElseThrow(
+        val book = bookRepository.findById(bookId).orElseThrow(
                 () -> new EntityNotFoundException("Book not found"));
 
         client.getBooks().remove(book);
-
         clientRepository.save(client);
     }
 }

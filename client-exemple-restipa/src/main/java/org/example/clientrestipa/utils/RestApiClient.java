@@ -3,6 +3,7 @@ package org.example.clientrestipa.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class RestApiClient {
 
     private String apiUrl;
@@ -67,9 +69,32 @@ public class RestApiClient {
      * @throws IOException        Если произошла ошибка при выполнении запроса.
      * @throws URISyntaxException Если указанный API-эндпоинт содержит недопустимый синтаксис URI.
      */
-    public String deleteRecord(String tableName, String recordId) throws IOException, URISyntaxException {
+    public String deleteRecord(String tableName, Long recordId) throws IOException, URISyntaxException {
         return sendRequest("DELETE", tableName + "/" + recordId, null);
     }
+
+
+    /**
+     * Удаляет запись из указанной таблицы по идентификатору.
+     *
+     * @param tableName      Имя таблицы.
+     * @param firstRecordId  Первый идентификатор записи для удаления.
+     * @param secondRecordId второй идентификатор записи для удаления.
+     * @return Ответ от сервера в виде строки.
+     * @throws IOException        Если произошла ошибка при выполнении запроса.
+     * @throws URISyntaxException Если указанный API-эндпоинт содержит недопустимый синтаксис URI.
+     */
+    public String deleteRecord(String tableName, Long firstRecordId, String secondTableName, Long secondRecordId) throws IOException, URISyntaxException {
+        return sendRequest(
+                "DELETE",
+                String.format(
+                        "%s/%d/%s/%d",
+                        tableName, firstRecordId, secondTableName, secondRecordId
+                ),
+                null
+        );
+    }
+
 
     /**
      * Отправляет HTTP-запрос к указанному API-эндпоинту.

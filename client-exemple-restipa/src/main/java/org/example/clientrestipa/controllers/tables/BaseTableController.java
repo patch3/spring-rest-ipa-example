@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -16,7 +15,6 @@ import lombok.val;
 import org.example.clientrestipa.configs.SocketConfig;
 import org.example.clientrestipa.controllers.BaseController;
 import org.example.clientrestipa.dto.BaseDTO;
-import org.example.clientrestipa.dto.ClientDTO;
 import org.example.clientrestipa.managers.AlertManager;
 import org.example.clientrestipa.utils.RestApiClient;
 import org.example.clientrestipa.utils.RestApiTableClient;
@@ -25,11 +23,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public abstract class BaseControllerTable<T extends BaseDTO> extends BaseController {
+public abstract class BaseTableController<T extends BaseDTO> extends BaseController {
     protected final static RestApiClient REST_CLIENT = new RestApiClient(SocketConfig.URL_CONNECT);
     private final Gson gson = new Gson();
 
@@ -41,7 +38,6 @@ public abstract class BaseControllerTable<T extends BaseDTO> extends BaseControl
 
     @FXML
     protected Button addButton;
-
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +80,7 @@ public abstract class BaseControllerTable<T extends BaseDTO> extends BaseControl
                     item.setOnAction(event -> {
                         try {
                             val objDTO = getTableView().getItems().get(getIndex());
-                            getRestApiTableClient().deleteRecord(objDTO.getId().toString());
+                            getRestApiTableClient().deleteRecord(objDTO.getId());
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             AlertManager.showErrorAlert("Ошибка получения данных с сервера!");

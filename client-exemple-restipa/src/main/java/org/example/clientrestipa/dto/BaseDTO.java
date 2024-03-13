@@ -3,7 +3,6 @@ package org.example.clientrestipa.dto;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data

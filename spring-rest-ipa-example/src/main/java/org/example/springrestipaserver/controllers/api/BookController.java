@@ -1,5 +1,6 @@
 package org.example.springrestipaserver.controllers.api;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springrestipaserver.models.Book;
 import org.example.springrestipaserver.repository.BookRepository;
 import org.springframework.data.domain.Sort;
@@ -47,6 +48,6 @@ public class BookController {
                 .map(existing -> {
                     existing.setName(updatedEntity.getName());
                     return bookRepository.save(existing);
-                }).orElse(null);
+                }).orElseThrow(() -> new EntityNotFoundException("Book not found"));
     }
 }

@@ -1,7 +1,6 @@
 package org.example.clientrestipa.utils;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -10,13 +9,15 @@ import java.net.URISyntaxException;
  * Класс для взаимодействия с REST API сервером для работы с конкретной таблицей.
  * Наследуется от {@link RestApiClient}.
  */
-@Setter
-@Getter
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class RestApiTableClient extends RestApiClient {
     /**
      * Имя таблицы, с которой будет производиться взаимодействие.
      */
-    private String tableName;
+    protected String tableName;
 
     /**
      * Конструктор для создания нового экземпляра RestApiTableClient на основе существующего RestApiClient.
@@ -47,7 +48,7 @@ public class RestApiTableClient extends RestApiClient {
      * @throws IOException Если произошла ошибка при выполнении запроса.
      */
     public String getTable() throws IOException, URISyntaxException {
-        return sendRequest("GET", this.tableName, null);
+        return super.sendRequest("GET", this.tableName, null);
     }
 
     /**
@@ -58,7 +59,7 @@ public class RestApiTableClient extends RestApiClient {
      * @throws IOException Если произошла ошибка при выполнении запроса.
      */
     public String addRecord(String recordData) throws IOException, URISyntaxException {
-        return addRecord(this.tableName, recordData);
+        return super.addRecord(this.tableName, recordData);
     }
 
     /**
@@ -68,7 +69,7 @@ public class RestApiTableClient extends RestApiClient {
      * @return Ответ от сервера в виде строки.
      * @throws IOException Если произошла ошибка при выполнении запроса.
      */
-    public String deleteRecord(String recordId) throws IOException, URISyntaxException {
-        return this.sendRequest("DELETE", this.tableName + "/" + recordId, null);
+    public String deleteRecord(Long recordId) throws IOException, URISyntaxException {
+        return super.deleteRecord(this.tableName, recordId);
     }
 }

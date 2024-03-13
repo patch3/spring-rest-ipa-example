@@ -1,32 +1,29 @@
 package org.example.clientrestipa.controllers.tables;
 
-import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.clientrestipa.dto.ClientDTO;
+import org.example.clientrestipa.dto.ConnectionDTO;
 import org.example.clientrestipa.utils.RestApiTableClient;
 
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
-public final class ClientController extends BaseTableController<ClientDTO> {
-    public final static String TABLE_NAME = "client";
-
-    @FXML
-    private TextField firstNameField;
-
-    @FXML
-    private TextField lastNameField;
+public class ClientConnectionController extends BaseTableController<ClientDTO> {
+    private final static String TABLE_NAME = "client-connection";
+    public ComboBox clientCombo;
+    public ComboBox bookCombo;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+
         super.table.getColumns().setAll(
                 new LinkedHashSet<>(4) {{
-                    add(new TableColumn<ClientDTO, String>("ID") {{
+                    add(new TableColumn<ConnectionDTO, String>("ID") {{
                         setCellValueFactory(new PropertyValueFactory<>("id"));
                     }});
                     add(new TableColumn<ClientDTO, String>("First name") {{
@@ -35,12 +32,9 @@ public final class ClientController extends BaseTableController<ClientDTO> {
                     add(new TableColumn<ClientDTO, String>("Last name") {{
                         setCellValueFactory(new PropertyValueFactory<>("lastName"));
                     }});
-                    add(createDeleteActionColumn());
                 }}
-        );
-        super.updateTable();
+        )
     }
-
     @Override
     public String getTableName() {
         return TABLE_NAME;
@@ -56,8 +50,8 @@ public final class ClientController extends BaseTableController<ClientDTO> {
         return ClientDTO.class;
     }
 
-    //@Override
-    public ClientDTO getDTOMoreAdd() {
-        return new ClientDTO(null, this.firstNameField.getText(), this.lastNameField.getText());
+    @Override
+    public ConnectionDTO getDTOMoreAdd() {
+        return null;
     }
 }
