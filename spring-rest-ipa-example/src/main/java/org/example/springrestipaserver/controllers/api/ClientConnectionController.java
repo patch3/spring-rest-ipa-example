@@ -6,13 +6,14 @@ import org.example.springrestipaserver.models.Client;
 import org.example.springrestipaserver.repository.BookRepository;
 import org.example.springrestipaserver.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/client-connection")
+@RestController
+@RequestMapping("/api/clientconnection")
 public class ClientConnectionController {
     private final ClientRepository clientRepository;
     private final BookRepository bookRepository;

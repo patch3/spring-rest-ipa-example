@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public abstract class BaseDTO {
     private transient final Gson gson = new Gson();
 
-    public Long id;
+    private Long id;
 
     @Override
     public String toString() {

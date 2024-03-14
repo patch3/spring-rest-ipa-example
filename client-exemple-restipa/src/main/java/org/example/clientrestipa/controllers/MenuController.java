@@ -7,11 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.example.clientrestipa.Application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
+    @FXML
+    public Button btnClientAndBook;
     @FXML
     private Button btnClient;
     @FXML
@@ -20,16 +23,20 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnClient.setOnAction(event -> {
-            this.openNewView("Клиенты", "/org/example/clientrestipa/tables/client-view.fxml");
+            this.openNewView("Клиенты", "tables/client-view.fxml");
         });
         btnBook.setOnAction(event -> {
-            this.openNewView("Книги", "/org/example/clientrestipa/tables/book-view.fxml");
+            this.openNewView("Книги", "tables/book-view.fxml");
         });
+        btnClientAndBook.setOnAction(event -> {
+            this.openNewView("Заказы клиентов", "tables/client-connection-view.fxml");
+        });
+
     }
 
     private void openNewView(String title, String patchToView) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(patchToView));
+            FXMLLoader loader = new FXMLLoader(Application.class.getResource(patchToView));
             Parent root = loader.load();
 
             Stage stage = new Stage();

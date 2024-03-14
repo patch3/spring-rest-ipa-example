@@ -133,7 +133,7 @@ public class RestApiClient {
      */
     private String readResponse(HttpURLConnection connection) throws IOException {
         StringBuilder content = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);

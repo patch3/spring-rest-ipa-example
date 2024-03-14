@@ -3,9 +3,10 @@ package org.example.clientrestipa.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
 
-@Data
+@Value
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class BookDTO extends BaseDTO {

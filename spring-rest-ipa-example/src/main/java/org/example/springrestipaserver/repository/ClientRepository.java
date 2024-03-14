@@ -3,6 +3,7 @@ package org.example.springrestipaserver.repository;
 
 import org.example.springrestipaserver.models.Client;
 import org.example.springrestipaserver.projections.ClientProjection;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 
@@ -14,9 +15,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Optional<ClientProjection> findProjectionById(Long id);
     @NonNull
+    @EntityGraph(attributePaths = "books")
     List<Client> findAll();
 
     List<ClientProjection> findProjectionBy();
-
-
 }

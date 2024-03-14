@@ -5,8 +5,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.clientrestipa.dto.ClientDTO;
+import org.example.clientrestipa.managers.AlertManager;
 import org.example.clientrestipa.utils.RestApiTableClient;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
@@ -38,7 +41,7 @@ public final class ClientController extends BaseTableController<ClientDTO> {
                     add(createDeleteActionColumn());
                 }}
         );
-        super.updateTable();
+        this.updateTable();
     }
 
     @Override

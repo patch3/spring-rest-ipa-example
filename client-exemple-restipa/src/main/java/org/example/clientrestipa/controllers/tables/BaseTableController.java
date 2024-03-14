@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lombok.val;
 import org.example.clientrestipa.configs.SocketConfig;
 import org.example.clientrestipa.controllers.BaseController;
@@ -39,9 +41,14 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
     @FXML
     protected Button addButton;
 
+    @FXML
+    protected AnchorPane anchorPaneBase;
+
 
     public void initialize(URL location, ResourceBundle resources) {
         addButton.setOnAction(action -> this.addEntry(this.getDTOMoreAdd()));
+
+
     }
 
 
@@ -56,6 +63,7 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
             ObservableList<T> data = FXCollections.observableList(clientList);
 
             this.table.setItems(data);
+
         } catch (IOException ex) {
             ex.printStackTrace();
             AlertManager.showErrorAlert("Ошибка получения данных с сервера!");
@@ -101,7 +109,6 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
         val data = gson.toJson(dto);
         try {
             getRestApiTableClient().addRecord(data);
-            this.updateTable();
         } catch (IOException ex) {
             ex.printStackTrace();
             AlertManager.showErrorAlert("Ошибка получения данных с сервера!");
@@ -109,6 +116,11 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
             ex.printStackTrace();
             AlertManager.showErrorAlert("Недействительный адрес");
         }
+        this.updateTable();
+    }
+
+    protected void closeStage() {
+        ((Stage) anchorPaneBase.getScene().getWindow()).close();
     }
 
     public abstract String getTableName();
