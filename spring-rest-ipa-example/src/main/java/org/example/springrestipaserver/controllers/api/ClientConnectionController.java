@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clientconnection")
+@RequestMapping("/api/client-connection")
 public class ClientConnectionController {
     private final ClientRepository clientRepository;
     private final BookRepository bookRepository;

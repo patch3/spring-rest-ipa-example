@@ -6,17 +6,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.clientrestipa.dto.BookDTO;
-import org.example.clientrestipa.managers.AlertManager;
 import org.example.clientrestipa.utils.RestApiTableClient;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
 public class BookController extends BaseTableController<BookDTO> implements Initializable {
-    public final static String TABLE_NAME = "book";
+
 
     @FXML
     public TextField nameField;
@@ -42,12 +39,12 @@ public class BookController extends BaseTableController<BookDTO> implements Init
 
     @Override
     public String getTableName() {
-        return TABLE_NAME;
+        return BookDTO.TABLE_NAME;
     }
 
     @Override
     public RestApiTableClient getRestApiTableClient() {
-        return new RestApiTableClient(BaseTableController.REST_CLIENT, TABLE_NAME);
+        return new RestApiTableClient(BaseTableController.REST_CLIENT, BookDTO.TABLE_NAME);
     }
 
     @Override

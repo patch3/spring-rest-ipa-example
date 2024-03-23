@@ -47,8 +47,6 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
 
     public void initialize(URL location, ResourceBundle resources) {
         addButton.setOnAction(action -> this.addEntry(this.getDTOMoreAdd()));
-
-
     }
 
 
@@ -75,34 +73,33 @@ public abstract class BaseTableController<T extends BaseDTO> extends BaseControl
 
 
     protected TableColumn<T, Button> createDeleteActionColumn() {
-        val column = new TableColumn<T, Button>("Action delete");
-
-        column.setCellValueFactory(param -> new SimpleObjectProperty<>(new Button("Delete")));
-        column.setCellFactory(param -> new TableCell<>() {
-            @Override
-            protected void updateItem(Button item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    item.setOnAction(event -> {
-                        try {
-                            val objDTO = getTableView().getItems().get(getIndex());
-                            getRestApiTableClient().deleteRecord(objDTO.getId());
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                            AlertManager.showErrorAlert("Ошибка получения данных с сервера!");
-                        } catch (URISyntaxException ex) {
-                            ex.printStackTrace();
-                            AlertManager.showErrorAlert("Недействительный адрес");
+        return new TableColumn<T, Button>("Action delete") {{
+                setCellValueFactory(param -> new SimpleObjectProperty<>(new Button("Delete")));
+                setCellFactory(param -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(Button item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            item.setOnAction(event -> {
+                                try {
+                                    val objDTO = getTableView().getItems().get(getIndex());
+                                    getRestApiTableClient().deleteRecord(objDTO.getId());
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                    AlertManager.showErrorAlert("Ошибка получения данных с сервера!");
+                                } catch (URISyntaxException ex) {
+                                    ex.printStackTrace();
+                                    AlertManager.showErrorAlert("Недействительный адрес");
+                                }
+                                getTableView().getItems().remove(getIndex());
+                            });
+                            setGraphic(item);
                         }
-                        getTableView().getItems().remove(getIndex());
-                    });
-                    setGraphic(item);
-                }
-            }
-        });
-        return column;
+                    }
+                });
+            }};
     }
 
     public void addEntry(T dto) {

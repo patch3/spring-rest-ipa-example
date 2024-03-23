@@ -5,18 +5,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.clientrestipa.dto.ClientDTO;
-import org.example.clientrestipa.managers.AlertManager;
 import org.example.clientrestipa.utils.RestApiTableClient;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
 public final class ClientController extends BaseTableController<ClientDTO> {
-    public final static String TABLE_NAME = "client";
-
     @FXML
     private TextField firstNameField;
 
@@ -46,12 +41,12 @@ public final class ClientController extends BaseTableController<ClientDTO> {
 
     @Override
     public String getTableName() {
-        return TABLE_NAME;
+        return ClientDTO.TABLE_NAME;
     }
 
     @Override
     public RestApiTableClient getRestApiTableClient() {
-        return new RestApiTableClient(BaseTableController.REST_CLIENT, TABLE_NAME);
+        return new RestApiTableClient(BaseTableController.REST_CLIENT, ClientDTO.TABLE_NAME);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Client implements ClientProjection {
             inverseJoinColumns = @JoinColumn(name = "bookId", referencedColumnName = "id")
     )
     private List<Book> books;
-
+    
 
     public Client(String firstName, String lastName) {
         this.firstName = firstName;

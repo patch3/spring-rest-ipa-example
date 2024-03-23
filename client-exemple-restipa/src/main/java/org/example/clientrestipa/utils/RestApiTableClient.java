@@ -1,6 +1,8 @@
 package org.example.clientrestipa.utils;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
