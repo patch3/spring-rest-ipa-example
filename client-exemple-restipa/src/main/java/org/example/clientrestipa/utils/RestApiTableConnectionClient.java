@@ -14,6 +14,17 @@ import java.net.URISyntaxException;
 public class RestApiTableConnectionClient extends RestApiTableClient {
     private String connectionTableName;
 
+
+    public RestApiTableConnectionClient(RestApiTableConnectionClient restApiTableConnectionClient) {
+        super(restApiTableConnectionClient);
+        this.connectionTableName = restApiTableConnectionClient.connectionTableName;
+    }
+
+    public RestApiTableConnectionClient(RestApiTableClient restApiClient, String connectionTableName) {
+        super(restApiClient);
+        this.connectionTableName = connectionTableName;
+    }
+
     public RestApiTableConnectionClient(RestApiClient restApiClient, String tableName, String connectionTableName) {
         super(restApiClient, tableName);
         this.connectionTableName = connectionTableName;
@@ -28,12 +39,12 @@ public class RestApiTableConnectionClient extends RestApiTableClient {
                         recordId,
                         connectionTableName,
                         secondRecordId
-                    ),
+                ),
                 null
         );
     }
 
-    public String addRecord(String tableName,  String recordData) throws IOException, URISyntaxException {
-        return sendRequest("POST", tableName, recordData);
+    public String addRecord(Long tableName, Long recordData) throws IOException, URISyntaxException {
+        return sendRequest("POST", tableName.toString(), recordData.toString());
     }
 }

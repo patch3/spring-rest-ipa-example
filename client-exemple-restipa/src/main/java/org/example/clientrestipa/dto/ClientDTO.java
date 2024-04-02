@@ -10,7 +10,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class ClientDTO extends BaseDTO {
-    public final static String TABLE_NAME = "client";
     String firstName;
     String lastName;
 
@@ -31,6 +30,7 @@ public class ClientDTO extends BaseDTO {
     }
 
     public ClientDTO(String firstName, String lastName) {
+        super(null);
         this.firstName = firstName;
         this.lastName = lastName;
         this.books = null;
@@ -42,5 +42,10 @@ public class ClientDTO extends BaseDTO {
                 "[%d] %s %s",
                 super.getId(), this.firstName, this.lastName
         );
+    }
+
+    @Override
+    public List<BookDTO> getConnection() {
+        return books;
     }
 }

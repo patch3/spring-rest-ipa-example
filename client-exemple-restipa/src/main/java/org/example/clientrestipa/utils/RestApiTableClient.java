@@ -32,6 +32,10 @@ public class RestApiTableClient extends RestApiClient {
         this.tableName = tableName;
     }
 
+    public RestApiTableClient(RestApiTableClient copy) {
+        this(copy, copy.tableName);
+    }
+
     /**
      * Создает новый экземпляр RestApiTableClient.
      *

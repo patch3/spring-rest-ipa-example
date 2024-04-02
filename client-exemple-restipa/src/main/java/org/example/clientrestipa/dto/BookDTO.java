@@ -4,19 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+import java.util.List;
+
 
 @Value
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class BookDTO extends BaseDTO {
-
-    public final static String TABLE_NAME = "book";
-
     String name;
+
+    List<ClientDTO> clients;
 
     public BookDTO(Long id, String name) {
         super(id);
         this.name = name;
+        this.clients = null;
+    }
+
+    public BookDTO(Long id, String name, List<ClientDTO> clients) {
+        super(id);
+        this.name = name;
+        this.clients = clients;
     }
 
     @Override
@@ -25,6 +33,11 @@ public class BookDTO extends BaseDTO {
                 "[%d] %s",
                 super.getId(), this.name
         );
+    }
+
+    @Override
+    public List<ClientDTO> getConnection() {
+        return clients;
     }
 }
 
