@@ -1,6 +1,7 @@
 package org.example.clientrestipa.servise;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import org.example.clientrestipa.configs.SocketConfig;
@@ -16,7 +17,9 @@ import java.util.List;
 @Getter
 public class TableService<T extends IDTO> implements IService<T> {
     protected final static RestApiClient REST_CLIENT = new RestApiClient(SocketConfig.URL_CONNECT);
-    protected final static Gson GSON = new Gson();
+    protected final static Gson GSON = new GsonBuilder()
+            .serializeNulls()
+            .create();
 
     protected final RestApiTableClient restTableClient;
 

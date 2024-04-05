@@ -107,6 +107,8 @@ public class RestApiClient {
      * @throws URISyntaxException Если указанный API-эндпоинт содержит недопустимый синтаксис URI.
      */
     protected String sendRequest(String method, String endpoint, String data) throws IOException, URISyntaxException {
+        System.out.println("request to " + apiUrl + endpoint + ", data : " + data);
+
         URL url = new URI(apiUrl + endpoint).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(method);

@@ -14,7 +14,7 @@ import java.util.List;
 public class ClientConnectionController
         extends BaseConnectionController<ClientDTO, BookDTO> {
 
-
+    
     @Override
     protected List<TableColumn<SimpleConnectionDTO<ClientDTO, BookDTO>, ?>> initializeListColumnForTable() {
         return new ArrayList<>(6) {{

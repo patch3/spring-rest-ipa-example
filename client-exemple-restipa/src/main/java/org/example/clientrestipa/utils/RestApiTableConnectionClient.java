@@ -34,7 +34,7 @@ public class RestApiTableConnectionClient extends RestApiTableClient {
         return sendRequest(
                 "DELETE",
                 String.format(
-                        "%s/%d/%s/%d",
+                        "connection/%s/%d/%s/%d",
                         super.tableName,
                         recordId,
                         connectionTableName,
@@ -45,6 +45,6 @@ public class RestApiTableConnectionClient extends RestApiTableClient {
     }
 
     public String addRecord(Long tableName, Long recordData) throws IOException, URISyntaxException {
-        return sendRequest("POST", tableName.toString(), recordData.toString());
+        return sendRequest("POST", "connection/" + tableName.toString(), recordData.toString());
     }
 }
