@@ -1,9 +1,11 @@
 package org.example.springrestipaserver.controllers.api;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.val;
 import org.example.springrestipaserver.models.Client;
-import org.example.springrestipaserver.projections.ClientProjection;
+import org.example.springrestipaserver.repository.BookRepository;
 import org.example.springrestipaserver.repository.ClientRepository;
-import org.springframework.boot.autoconfigure.batch.BatchDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,26 +14,22 @@ import java.util.List;
 @RequestMapping("/api/client")
 public class ClientController {
     private final ClientRepository clientRepository;
+    private final BookRepository bookRepository;
 
-
-    public ClientController(ClientRepository clientRepository) {
+    @Autowired
+    public ClientController(ClientRepository clientRepository, BookRepository bookRepository) {
         this.clientRepository = clientRepository;
+        this.bookRepository = bookRepository;
     }
 
-    @BatchDataSource()
-    @GetMapping()
-    public List<ClientProjection> getAll() {
-        return clientRepository.findProjectionBy();
+    @GetMapping
+    public List<Client> getAll() {
+        return clientRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ClientProjection getById(@PathVariable Long id) {
-        return clientRepository.findProjectionById(id).orElse(null);
-    }
-
-    @PostMapping
-    public Client addClient(@RequestBody Client client) {
-        return clientRepository.save(client);
+    public Client getById(@PathVariable Long id) {
+        return clientRepository.findById(id).orElse(null);
     }
 
     @DeleteMapping("/{id}")
@@ -39,16 +37,36 @@ public class ClientController {
         clientRepository.deleteById(id);
     }
 
-    @PutMapping("/{id}")
-    public Client updateEntity(
-            @PathVariable Long id,
-            @RequestBody Client updatedEntity) {
-        return clientRepository.findById(id)
-                .map(existing -> {
-                    existing.setFirstName(updatedEntity.getFirstName());
-                    existing.setLastName(updatedEntity.getLastName());
-                    return clientRepository.save(existing);
-                })
-                .orElse(null);
+
+    @PostMapping("/connection")
+    public Client addConnection(
+            @RequestBody Long idClient,
+            @RequestBody Long idBook
+        ) {
+        val client = clientRepository.findById(idClient).orElseThrow(
+                () -> new EntityNotFoundException("Client not found"));
+        val book   = bookRepository.findById(idBook).orElseThrow(
+                () -> new EntityNotFoundException("Book not found"));
+        client.getBooks().add(book);
+        return clientRepository.save(client);
+    }
+
+    @PostMapping
+    public Client addClient(@RequestBody Client client) {
+        return clientRepository.save(client);
+    }
+
+    @DeleteMapping("/connection/{clientId}/book/{bookId}")
+    public void deleteConnection(
+            @PathVariable Long clientId,
+            @PathVariable Long bookId
+    ) {
+        val client = clientRepository.findById(clientId).orElseThrow(
+                () -> new EntityNotFoundException("Client not found"));
+        val book = bookRepository.findById(bookId).orElseThrow(
+                () -> new EntityNotFoundException("Book not found"));
+
+        client.getBooks().remove(book);
+        clientRepository.save(client);
     }
 }
